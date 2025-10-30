@@ -9,20 +9,23 @@
   </head>
 
   <body>
-    <header>
-      <div>
-        <a> Panaderia</a>
-        <nav>
+    <header class="topbar">
+      <div class="container topbar__row">
+        <a class="logo" href="#">Panadería <span>Luna</span></a>
+        <nav class="nav" id="nav">
           <a href="#inicio">Inicio</a>
           <a href="#productos">Productos</a>
           <a href="#contacto">Contacto</a>
         </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+          ☰
+        </button>
       </div>
     </header>
 
     <main>
       <section id="inicio" class="hero">
-        <div>
+        <div class="container hero__content">
           <h1>Pan fresco cada mañana</h1>
           <p>Artesanal, crujiente y hecho con amor. ¡Haz tu pedido ahora!</p>
           <a class="btn" href="#contacto">Hacer pedido</a>
@@ -60,6 +63,57 @@
           </div>
         </div>
       </section>
+
+      <section id="contacto" class="contact">
+        <div class="container">
+          <h2>Contáctanos</h2>
+          <form id="contactForm" class="form">
+            <div class="form__row">
+              <label
+                >Nombre
+                <input
+                  type="text"
+                  name="nombre"
+                  placeholder="Tu nombre"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form__row">
+              <label
+                >WhatsApp
+                <input
+                  type="tel"
+                  name="telefono"
+                  placeholder="+591 ..."
+                  required
+                />
+              </label>
+            </div>
+            <div class="form__row">
+              <label
+                >Mensaje
+                <textarea
+                  name="mensaje"
+                  rows="4"
+                  placeholder="¿Qué te gustaría pedir?"
+                  required
+                ></textarea>
+              </label>
+            </div>
+            <button type="submit" class="btn">Enviar</button>
+          </form>
+        </div>
+      </section>
     </main>
+
+    <footer class="footer">
+      <div class="container footer__row">
+        <small>© 2025 Panadería Luna · La Paz</small>
+        <a href="#inicio">Volver arriba ↑</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>
