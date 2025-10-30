@@ -6,7 +6,7 @@ navToggle.addEventListener("click", () => {
   nav.classList.toggle("is-open");
 });
 
-// Scroll suave en anclas internas
+// Scroll suave
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener("click", (e) => {
     const id = a.getAttribute("href");
@@ -18,13 +18,32 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
   });
 });
 
-// Validación simple del formulario
+// Formulario + localStorage + envío por WhatsApp
 const form = document.getElementById("contactForm");
+const numeroWhatsApp = "70745899"; // tu número
+
+// Cargar datos guardados
+window.addEventListener("DOMContentLoaded", () => {
+  const datosGuardados = JSON.parse(localStorage.getItem("formData"));
+  if (datosGuardados) {
+    Object.entries(datosGuardados).forEach(([key, value]) => {
+      const input = form.elements[key];
+      if (input) input.value = value;
+    });
+  }
+});
+
+// Guardar datos a medida que se escribe
+form.addEventListener("input", () => {
+  const formData = Object.fromEntries(new FormData(form).entries());
+  localStorage.setItem("formData", JSON.stringify(formData));
+});
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(form).entries());
 
-  // Reglas mínimas
+  // Validación
   if (data.nombre.trim().length < 2) {
     alert("Por favor, escribe tu nombre.");
     return;
@@ -34,11 +53,22 @@ form.addEventListener("submit", (e) => {
     return;
   }
   if (data.mensaje.trim().length < 5) {
-    alert("Cuéntanos un poco más en el mensaje.");
+    alert("El mensaje es demasiado corto.");
     return;
   }
 
-  // Simulación de envío (aquí podrían integrar WhatsApp API, EmailJS, etc.)
-  alert(`¡Gracias ${data.nombre}! Te contactaremos al ${data.telefono}.`);
+  // Construir el mensaje para WhatsApp
+  const texto = `Hola Panadería Neythan! 👋
+Soy ${data.nombre}.
+Mi número es ${data.telefono}.
+Mensaje: ${data.mensaje}`;
+
+  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
+    texto
+  )}`;
+
+  // Borrar datos guardados y abrir WhatsApp
+  localStorage.removeItem("formData");
+  window.open(url, "_blank");
   form.reset();
 });
